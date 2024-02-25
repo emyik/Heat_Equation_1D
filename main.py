@@ -33,9 +33,9 @@ if __name__ == '__main__':
     """
 
     # number of training samples
-    num_train_samples = 10000
+    num_train_samples = 1000
     # number of test samples
-    num_test_samples = 1000
+    num_test_samples = 100
 
     # build a core network model
     network = Network.build()
@@ -94,6 +94,7 @@ if __name__ == '__main__':
     cbar.set_label('u(t,x)', fontdict = font1)
     cbar.mappable.set_clim(vmin, vmax)
     cbar.ax.tick_params(labelsize=15)
+    plt.savefig("num0.png")
 
 
     # Exact solution U and Error E
@@ -121,7 +122,8 @@ if __name__ == '__main__':
     plt.tick_params(axis='both', which='major', labelsize=15)
     cbar = plt.colorbar(pad=0.05, aspect=10)
     cbar.ax.tick_params(labelsize=15)
-    plt.show()
+    # plt.show()
+    plt.savefig('num1.png')
 
     # Comparison at time 0, 0.1 and 0.2
 
@@ -183,4 +185,5 @@ if __name__ == '__main__':
     ax3.tick_params(labelsize=15)
     
     plt.tight_layout()
-    plt.show()
+    # plt.show()
+    plt.savefig('num2.png')
