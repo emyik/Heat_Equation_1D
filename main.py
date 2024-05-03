@@ -47,6 +47,7 @@ if __name__ == '__main__':
     t_f=30
     x_f=24
     x_ini=0
+    cond=3.8608
 
     temp_x = np.arange(30)
     temp_y = np.arange(24)
@@ -111,7 +112,7 @@ if __name__ == '__main__':
     for i in range(1,1000):
       C = -32/(i**3*np.pi**3)*(2*(-1)**i+1)
       for j in range(n):
-        U[j,...] = U[j,...] + C*np.sin(i*np.pi*x[j]/2)*np.exp(-i**2*np.pi**2*t)
+        U[j,...] = U[j,...] + C*np.sin(i*np.pi*x[j]/x_f)*np.exp(-i**2*np.pi**2*cond*t/(x_f**2))
     
     E = (U-u)
     
