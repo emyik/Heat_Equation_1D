@@ -61,7 +61,11 @@ if __name__ == '__main__':
     tx_bnd_down = np.random.rand(num_train_samples, 2)
     tx_bnd_down[..., 0] = t_f*tx_bnd_down[..., 0]              
     tx_bnd_down[..., 1] = x_ini  
-
+    print(tx_eqn)
+    print(tx_ini)
+    print(tx_bnd_up)
+    print(tx_bnd_down)
+    
     # create training output
     u_zero = np.zeros((num_train_samples, 1))
     u_ini = u0(tf.constant(tx_ini)).numpy()
