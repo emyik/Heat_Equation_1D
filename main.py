@@ -33,9 +33,9 @@ if __name__ == '__main__':
     """
 
     # number of training samples
-    num_train_samples = 10000
+    num_train_samples = 720
     # number of test samples
-    num_test_samples = 1000
+    num_test_samples = 200
 
     # build a core network model
     network = Network.build()
@@ -44,29 +44,28 @@ if __name__ == '__main__':
     pinn = PINN(network).build()
 
     # Time and space domain
-    t_f=100
-    x_f=100
+    t_f=30
+    x_f=24
     x_ini=0
 
-    # create training input
-    temp_x = np.arange(100)
-    temp_y = np.arange(100)
+    temp_x = np.arange(30)
+    temp_y = np.arange(24)
     xx, yy = np.meshgrid(temp_x, temp_y)
     tx_eqn = np.vstack([xx.ravel(), yy.ravel()]).T
     
-    tx_ini = np.column_stack((np.zeros(100, dtype=int), np.arange(100)))
-
-    array_99 = np.full((100, 1), 99)
-    tx_bnd_up = np.column_stack((np.arange(100), array_99))
-
-    array_0 = np.full((100, 1), 0)
-    tx_bnd_down = np.column_stack((np.arange(100), array_0))
+    tx_ini = np.column_stack((np.zeros(720, dtype=int), np.arange(720)))
     
+    array_99 = np.full((720, 1), 23)
+    tx_bnd_up = np.column_stack((np.arange(720), array_99))
+    
+    array_0 = np.full((720, 1), 0)
+    tx_bnd_down = np.column_stack((np.arange(720), array_0))
+
     print(tx_eqn)
     print(tx_ini)
     print(tx_bnd_up)
     print(tx_bnd_down)
-    
+
     # create training output
     u_zero = np.zeros((num_train_samples, 1))
     u_ini = u0(tf.constant(tx_ini)).numpy()
