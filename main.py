@@ -33,9 +33,9 @@ if __name__ == '__main__':
     """
 
     # number of training samples
-    num_train_samples = 1000
+    num_train_samples = 10000
     # number of test samples
-    num_test_samples = 100
+    num_test_samples = 1000
 
     # build a core network model
     network = Network.build()
