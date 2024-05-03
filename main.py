@@ -54,7 +54,7 @@ if __name__ == '__main__':
     xx, yy = np.meshgrid(temp_x, temp_y)
     tx_eqn = np.vstack([xx.ravel(), yy.ravel()]).T
     
-    tx_ini = np.column_stack((np.zeros(100, dtype=int), np.arange(100))
+    tx_ini = np.column_stack((np.zeros(100, dtype=int), np.arange(100)))
 
     array_99 = np.full((100, 1), 99)
     tx_bnd_up = np.column_stack((np.arange(100), array_99))
