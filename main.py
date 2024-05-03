@@ -44,23 +44,24 @@ if __name__ == '__main__':
     pinn = PINN(network).build()
 
     # Time and space domain
-    t_f=0.2
-    x_f=2
+    t_f=100
+    x_f=100
     x_ini=0
 
     # create training input
-    tx_eqn = np.random.rand(num_train_samples, 2)
-    tx_eqn[..., 0] = t_f*tx_eqn[..., 0]                
-    tx_eqn[..., 1] = (x_f-x_ini)*tx_eqn[..., 1] + x_ini           
-    tx_ini = np.random.rand(num_train_samples, 2)
-    tx_ini[..., 0] = 0                               
-    tx_ini[..., 1] = (x_f-x_ini)*tx_ini[..., 1] + x_ini           
-    tx_bnd_up = np.random.rand(num_train_samples, 2)
-    tx_bnd_up[..., 0] = t_f*tx_bnd_up[..., 0]               
-    tx_bnd_up[..., 1] = x_f  # x = -1 or +1
-    tx_bnd_down = np.random.rand(num_train_samples, 2)
-    tx_bnd_down[..., 0] = t_f*tx_bnd_down[..., 0]              
-    tx_bnd_down[..., 1] = x_ini  
+    temp_x = np.arange(100)
+    temp_y = np.arange(100)
+    xx, yy = np.meshgrid(temp_x, temp_y)
+    tx_eqn = np.vstack([xx.ravel(), yy.ravel()]).T
+    
+    tx_ini = np.column_stack((np.zeros(100, dtype=int), np.arange(100))
+
+    array_99 = np.full((100, 1), 99)
+    tx_bnd_up = np.column_stack((np.arange(100), array_99))
+
+    array_0 = np.full((100, 1), 0)
+    tx_bnd_down = np.column_stack((np.arange(100), array_0))
+    
     print(tx_eqn)
     print(tx_ini)
     print(tx_bnd_up)
