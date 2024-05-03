@@ -40,11 +40,10 @@ class PINN:
         tx_bnd = tf.keras.layers.Input(shape=(2,))
         tx_bnd_up = tf.keras.layers.Input(shape=(2,))
         tx_bnd_down = tf.keras.layers.Input(shape=(2,))
-        print (tx_eqn)
-        print (tx_ini)
 
         # compute gradients
         _, du_dt, _, d2u_dt2, d2u_dx2 = self.grads(tx_eqn)
+        print (du_dt, d2u_dt2, d2u_dx2)
         # equation output being zero
         u_eqn = du_dt - self.c*self.c * d2u_dx2
         
