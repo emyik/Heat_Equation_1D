@@ -61,10 +61,10 @@ if __name__ == '__main__':
     array_0 = np.full((720, 1), 0)
     tx_bnd_down = np.column_stack((np.arange(720), array_0))
 
-    print(tx_eqn)
-    print(tx_ini)
-    print(tx_bnd_up)
-    print(tx_bnd_down)
+  #  print(tx_eqn)
+  #  print(tx_ini)
+  #  print(tx_bnd_up)
+  #  print(tx_bnd_down)
 
     # create training output
     u_zero = np.zeros((num_train_samples, 1))
