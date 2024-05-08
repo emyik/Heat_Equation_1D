@@ -70,8 +70,8 @@ if __name__ == '__main__':
     # create training output
     u_zero = np.zeros((num_train_samples, 1))
     u_ini = u0(tf.constant(tx_ini)).numpy()
-    print (u_ini)
-    print (u0)
+    print ("u_ini: "+u_ini)
+    print ("tx_ini: "+tx_ini)
 
     # train the model using L-BFGS-B algorithm
     x_train = [tx_eqn, tx_ini, tx_bnd_up,tx_bnd_down]
