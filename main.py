@@ -48,13 +48,14 @@ if __name__ == '__main__':
     x_f=24
     x_ini=0
     cond=3.8608
+    input_len=720
 
     temp_x = np.arange(30)
     temp_y = np.arange(24)
     xx, yy = np.meshgrid(temp_x, temp_y)
     tx_eqn = np.vstack([xx.ravel(), yy.ravel()]).T
     
-    tx_ini = np.column_stack((np.zeros(720, dtype=int), np.arange(720)))
+    #tx_ini = np.column_stack((np.zeros(720, dtype=int), np.arange(720)))
     
     array_99 = np.full((720, 1), 23)
     tx_bnd_up = np.column_stack((np.arange(720), array_99))
@@ -62,17 +63,21 @@ if __name__ == '__main__':
     array_0 = np.full((720, 1), 0)
     tx_bnd_down = np.column_stack((np.arange(720), array_0))
 
-  #  print(tx_eqn)
-  #  print(tx_ini)
-  #  print(tx_bnd_up)
-  #  print(tx_bnd_down)
-
     # create training output
     u_zero = np.zeros((num_train_samples, 1))
-    u_ini = u0(tf.constant(tx_ini)).numpy()
-    print ("u_ini: "+u_ini)
-    print ("tx_ini: "+tx_ini)
-
+    #u_ini = u0(tf.constant(tx_ini)).numpy()
+    tx_ini=np.empty((input_len, 2), dtype=object)
+    u_ini=np.empty((input_len, 1), dtype=object)
+    file=open("data/tx_ini.txt", 'r')
+    i=0
+    for line in file:
+      num=line.split(", ")
+      tx_ini[i, 0]=0
+      tx_ini[i, 1]=float(num[1].strip())
+      u_ini[i, 0]=float(num[2].strip())
+      i+=1
+    file.close()
+    
     # train the model using L-BFGS-B algorithm
     x_train = [tx_eqn, tx_ini, tx_bnd_up,tx_bnd_down]
     y_train = [u_zero, u_ini, u_zero, u_zero]
