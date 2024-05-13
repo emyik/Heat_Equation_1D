@@ -48,7 +48,6 @@ if __name__ == '__main__':
     x_f=24
     x_ini=0
     cond=3.8608
-    input_len=720
 
     temp_x = np.arange(30)
     temp_y = np.arange(24)
@@ -66,8 +65,8 @@ if __name__ == '__main__':
     # create training output
     u_zero = np.zeros((num_train_samples, 1))
     #u_ini = u0(tf.constant(tx_ini)).numpy()
-    tx_ini=np.empty((input_len, 2), dtype=object)
-    u_ini=np.empty((input_len, 1), dtype=object)
+    tx_ini=np.empty((num_train_samples, 2), dtype=object)
+    u_ini=np.empty((num_train_samples, 1), dtype=object)
     file=open("data/tx_ini.txt", 'r')
     i=0
     for line in file:
