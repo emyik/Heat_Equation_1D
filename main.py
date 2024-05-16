@@ -149,47 +149,47 @@ if __name__ == '__main__':
 
     for i in range(1,500):
       C = -32/(i**3*np.pi**3)*(2*(-1)**i+1)
-      U_1 = U_1 + C*np.sin(i*np.pi*x_flat_/2)*np.exp(-i**2*np.pi**2*t)
+      U_1 = U_1 + C*np.sin(i*np.pi*x_flat_/2)*np.exp(-i**2*np.pi**2*t*cond/(x_f**2))
 
-    tx = np.stack([np.full(t_flat.shape, 0), x_flat], axis=-1)
+    tx = np.stack([np.full(t_flat.shape, t), x_flat], axis=-1)
     u_ = network.predict(tx, batch_size=num_test_samples)
     ax1.plot(x_flat, u_)
     ax1.plot(x_flat_, U_1,'r*')
-    ax1.set_title('t={}'.format(0), fontdict = font1)
+    ax1.set_title('t={}'.format(t), fontdict = font1)
     ax1.set_xlabel('x', fontdict = font1)
     ax1.set_ylabel('u(t,x)', fontdict = font1)
     ax1.tick_params(labelsize=15)
 
 
     U_1 = np.linspace(0,0,10)
-    t = 0.1
+    t = 10
 
     for i in range(1,500):
       C = -32/(i**3*np.pi**3)*(2*(-1)**i+1)
-      U_1 = U_1 + C*np.sin(i*np.pi*x_flat_/2)*np.exp(-i**2*np.pi**2*t)
+      U_1 = U_1 + C*np.sin(i*np.pi*x_flat_/2)*np.exp(-i**2*np.pi**2*t*cond/(x_f**2))
 
-    tx = np.stack([np.full(t_flat.shape, 0.1), x_flat], axis=-1)
+    tx = np.stack([np.full(t_flat.shape, t), x_flat], axis=-1)
     u_ = network.predict(tx, batch_size=num_test_samples)
     ax2.plot(x_flat, u_)
     ax2.plot(x_flat_, U_1,'r*')
-    ax2.set_title('t={}'.format(0.1), fontdict = font1)
+    ax2.set_title('t={}'.format(t), fontdict = font1)
     ax2.set_xlabel('x', fontdict = font1)
     ax2.set_ylabel('u(t,x)', fontdict = font1)
     ax2.tick_params(labelsize=15)
 
 
     U_1 = np.linspace(0,0,10)
-    t = 0.2
+    t = 20
 
     for i in range(1,500):
       C = -32/(i**3*np.pi**3)*(2*(-1)**i+1)
-      U_1 = U_1 + C*np.sin(i*np.pi*x_flat_/2)*np.exp(-i**2*np.pi**2*t)
+      U_1 = U_1 + C*np.sin(i*np.pi*x_flat_/2)*np.exp(-i**2*np.pi**2*t*cond/(x_f**2))
     
-    tx = np.stack([np.full(t_flat.shape, 0.2), x_flat], axis=-1)
+    tx = np.stack([np.full(t_flat.shape, t), x_flat], axis=-1)
     u_ = network.predict(tx, batch_size=num_test_samples)
     ax3.plot(x_flat, u_,label='Computed solution')
     ax3.plot(x_flat_, U_1,'r*',label='Exact solution')
-    ax3.set_title('t={}'.format(0.2), fontdict = font1)
+    ax3.set_title('t={}'.format(t), fontdict = font1)
     ax3.set_xlabel('x', fontdict = font1)
     ax3.set_ylabel('u(t,x)', fontdict = font1)
     ax3.legend(loc='best', fontsize = 'xx-large')
