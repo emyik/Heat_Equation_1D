@@ -49,6 +49,15 @@ if __name__ == '__main__':
     x_ini=0
     cond=3.8608
 
+    tx_vals=np.empty([t_f, x_f], dtype=object)
+    file=open("data/tx_eqn.txt", 'r')
+    i=0
+    for line in file:
+      num=line.split(", ")
+      tx_vals[int(num[0]), int(num[1])]=float(num[2].strip())
+      i+=1
+    file.close()
+
     temp_x = np.arange(30)
     temp_y = np.arange(24)
     xx, yy = np.meshgrid(temp_x, temp_y)
@@ -74,6 +83,30 @@ if __name__ == '__main__':
       tx_ini[i, 0]=0
       tx_ini[i, 1]=float(num[1].strip())
       u_ini[i, 0]=float(num[2].strip())
+      i+=1
+    file.close()
+
+    tx_bnd_down=np.empty((num_train_samples, 2), dtype=object)
+    u_bnd_down=np.empty((num_train_samples, 1), dtype=object)
+    file=open("data/tx_bnd_dn.txt", 'r')
+    i=0
+    for line in file:
+      num=line.split(", ")
+      tx_bnd_down[i, 0]=float(num[0].strip())
+      tx_bnd_down[i, 1]=float(num[1].strip())
+      u_bnd_down[i, 0]=float(num[2].strip())
+      i+=1
+    file.close()
+  
+    tx_bnd_up=np.empty((num_train_samples, 2), dtype=object)
+    u_bnd_up=np.empty((num_train_samples, 1), dtype=object)
+    file=open("data/tx_bnd_up.txt", 'r')
+    i=0
+    for line in file:
+      num=line.split(", ")
+      tx_bnd_up[i, 0]=float(num[0].strip())
+      tx_bnd_up[i, 1]=float(num[1].strip())
+      u_bnd_up[i, 0]=float(num[2].strip())
       i+=1
     file.close()
     
@@ -139,17 +172,15 @@ if __name__ == '__main__':
     # Comparison at time 0, 0.1 and 0.2
 
     fig,(ax1, ax2, ax3)  = plt.subplots(1,3,figsize=(15,6))
-    x_flat_ = np.linspace(x_ini, x_f, 10)
+    x_flat_ = np.linspace(x_ini, x_f, x_f)
 
     font1 = {'family':'serif','size':20}
     font2 = {'family':'serif','size':15}
    
-    U_1 = np.linspace(0,0,10)
+    U_1 = np.linspace(0,0,x_f)
     t = 0
 
-    for i in range(1,500):
-      C = -32/(i**3*np.pi**3)*(2*(-1)**i+1)
-      U_1 = U_1 + C*np.sin(i*np.pi*x_flat_/2)*np.exp(-i**2*np.pi**2*t*cond/(x_f**2))
+    U_1=tx_vals[t]
 
     tx = np.stack([np.full(t_flat.shape, t), x_flat], axis=-1)
     u_ = network.predict(tx, batch_size=num_test_samples)
@@ -161,13 +192,11 @@ if __name__ == '__main__':
     ax1.tick_params(labelsize=15)
 
 
-    U_1 = np.linspace(0,0,10)
+    U_1 = np.linspace(0,0,x_f)
     t = 10
 
-    for i in range(1,500):
-      C = -32/(i**3*np.pi**3)*(2*(-1)**i+1)
-      U_1 = U_1 + C*np.sin(i*np.pi*x_flat_/2)*np.exp(-i**2*np.pi**2*t*cond/(x_f**2))
-
+    U_1=tx_vals[t]
+    
     tx = np.stack([np.full(t_flat.shape, t), x_flat], axis=-1)
     u_ = network.predict(tx, batch_size=num_test_samples)
     ax2.plot(x_flat, u_)
@@ -178,12 +207,10 @@ if __name__ == '__main__':
     ax2.tick_params(labelsize=15)
 
 
-    U_1 = np.linspace(0,0,10)
+    U_1 = np.linspace(0,0,x_f)
     t = 20
 
-    for i in range(1,500):
-      C = -32/(i**3*np.pi**3)*(2*(-1)**i+1)
-      U_1 = U_1 + C*np.sin(i*np.pi*x_flat_/2)*np.exp(-i**2*np.pi**2*t*cond/(x_f**2))
+    U_1=tx_vals[t]
     
     tx = np.stack([np.full(t_flat.shape, t), x_flat], axis=-1)
     u_ = network.predict(tx, batch_size=num_test_samples)
