@@ -10,7 +10,7 @@ class PINN:
         grads: gradient layer.
     """
 
-    def __init__(self, network, c=2):
+    def __init__(self, network, c=0.3541):
         """
         Args:
             network: keras network model with input (t, x) and output u(t, x).
@@ -43,9 +43,9 @@ class PINN:
 
         # compute gradients
         _, du_dt, _, d2u_dt2, d2u_dx2 = self.grads(tx_eqn)
-        print (du_dt, d2u_dt2, d2u_dx2)
+        
         # equation output being zero
-        u_eqn = du_dt - self.c*self.c * d2u_dx2
+        u_eqn = du_dt - self.c * d2u_dx2
         
         # initial condition output
         u_ini, du_dt_ini, _, _, _ = self.grads(tx_ini)
