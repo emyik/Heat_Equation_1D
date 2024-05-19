@@ -63,10 +63,10 @@ if __name__ == '__main__':
       i+=1
     file.close()
 
-    temp_x = np.arange(30)
-    temp_y = np.arange(24)
-    xx, yy = np.meshgrid(temp_x, temp_y)
-    tx_eqn = np.vstack([xx.ravel(), yy.ravel()]).T
+    #temp_x = np.arange(30)
+    #temp_y = np.arange(24)
+    #xx, yy = np.meshgrid(temp_x, temp_y)
+    #tx_eqn = np.vstack([xx.ravel(), yy.ravel()]).T
     
     #tx_ini = np.column_stack((np.zeros(720, dtype=int), np.arange(720)))
     
