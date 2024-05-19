@@ -49,12 +49,17 @@ if __name__ == '__main__':
     x_ini=0
     cond=3.8608
 
+    tx_eqn=np.empty((num_train_samples, 2), dtype=object)
+    u_eqn=np.empty((num_train_samples, 1), dtype=object)
     tx_vals=np.empty([t_f, x_f], dtype=object)
     file=open("data/tx_eqn.txt", 'r')
     i=0
     for line in file:
       num=line.split(", ")
       tx_vals[int(num[0]), int(num[1])]=float(num[2].strip())
+      tx_eqn[i, 0]=float(num[0].strip())
+      tx_eqn[i, 1]=float(num[1].strip())
+      u_eqn[i, 0]=float(num[2].strip())
       i+=1
     file.close()
 
@@ -112,7 +117,7 @@ if __name__ == '__main__':
     
     # train the model using L-BFGS-B algorithm
     x_train = [tx_eqn, tx_ini, tx_bnd_up,tx_bnd_down]
-    y_train = [u_zero, u_ini, u_zero, u_zero]
+    y_train = [u_eqn, u_ini, u_bnd_up, u_bnd_down]
     lbfgs = L_BFGS_B(model=pinn, x_train=x_train, y_train=y_train)
     lbfgs.fit()
 
