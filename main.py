@@ -110,18 +110,18 @@ if __name__ == '__main__':
     lbfgs = L_BFGS_B(model=pinn, x_train=x_train, y_train=y_train)
     lbfgs.fit()
 
-    # predict u(t,x) distribution
-    t_flat = np.linspace(0, t_f, num_test_samples)
-    x_flat = np.linspace(x_ini, x_f, num_test_samples)
-    t, x = np.meshgrid(t_flat, x_flat)
-    tx = np.stack([t.flatten(), x.flatten()], axis=-1)
-    u = network.predict(tx, batch_size=num_test_samples)
-    u = u.reshape(t.shape)
-    
+    # U(T,X) GRAPH
+    t_flat = np.linspace(0, 23, 24)
+    x_flat = np.linspace(0, 29, 30)
+    x, t = np.meshgrid(t_flat, x_flat) # t and x
 
-    # plot u(t,x) distribution as a color-map
+    tx = tx_eqn.astype(np.int64) # testing input
+    u = network.predict(tx, batch_size=num_test_samples)
+    u = u.reshape(30, 24)
+
+    # Plotting
     fig = plt.figure(figsize=(15,10))
-    vmin, vmax = 0, +1.2
+    vmin, vmax = 0, 70
     font1 = {'family':'serif','size':20}
     font2 = {'family':'serif','size':15}
     plt.pcolormesh(t, x, u, cmap='rainbow', norm=Normalize(vmin=vmin, vmax=vmax))
@@ -135,19 +135,9 @@ if __name__ == '__main__':
     plt.savefig("num0.png")
 
 
-    # Exact solution U and Error E
-    n = num_test_samples
-    U = np.zeros([n,n])
-    t = np.linspace(0,t_f,n)
-    x = np.linspace(x_ini,x_f,n)
-    X,T = np.meshgrid(t,x)
-
-    for i in range(1,1000):
-      C = -32/(i**3*np.pi**3)*(2*(-1)**i+1)
-      for j in range(n):
-        U[j,...] = U[j,...] + C*np.sin(i*np.pi*x[j]/x_f)*np.exp(-i**2*np.pi**2*cond*t/(x_f**2))
-    
-    E = (U-u)
+    # ERROR GRAPH
+    E = (tx_vals-u)
+    E = E.astype(float)
     
     fig= plt.figure(figsize=(15,10))
     vmin, vmax = -np.max(np.max(np.abs(E))), np.max(np.max(np.abs(E)))
@@ -160,11 +150,12 @@ if __name__ == '__main__':
     plt.tick_params(axis='both', which='major', labelsize=15)
     cbar = plt.colorbar(pad=0.05, aspect=10)
     cbar.ax.tick_params(labelsize=15)
-    # plt.show()
     plt.savefig('num1.png')
 
     # Comparison at time 0, 0.1 and 0.2
 
+    x_flat = np.linspace(0, 24, num_test_samples)
+    t_flat=np.linspace(0, 29, num_test_samples)
     fig,(ax1, ax2, ax3)  = plt.subplots(1,3,figsize=(15,6))
     x_flat_ = np.linspace(x_ini, x_f, x_f)
 
