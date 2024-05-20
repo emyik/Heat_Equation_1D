@@ -47,8 +47,8 @@ if __name__ == '__main__':
     t_f=30
     x_f=24
     x_ini=0
-    cond=3.8608
 
+    #read in tx_eqn
     tx_eqn=np.empty((num_train_samples, 2), dtype=object)
     u_eqn=np.empty((num_train_samples, 1), dtype=object)
     tx_vals=np.empty([t_f, x_f], dtype=object)
@@ -63,22 +63,9 @@ if __name__ == '__main__':
       i+=1
     file.close()
 
-    #temp_x = np.arange(30)
-    #temp_y = np.arange(24)
-    #xx, yy = np.meshgrid(temp_x, temp_y)
-    #tx_eqn = np.vstack([xx.ravel(), yy.ravel()]).T
-    
-    #tx_ini = np.column_stack((np.zeros(720, dtype=int), np.arange(720)))
-    
-    array_99 = np.full((720, 1), 23)
-    tx_bnd_up = np.column_stack((np.arange(720), array_99))
-    
-    array_0 = np.full((720, 1), 0)
-    tx_bnd_down = np.column_stack((np.arange(720), array_0))
 
-    # create training output
+    #read in tx_ini
     u_zero = np.zeros((num_train_samples, 1))
-    #u_ini = u0(tf.constant(tx_ini)).numpy()
     tx_ini=np.empty((num_train_samples, 2), dtype=object)
     u_ini=np.empty((num_train_samples, 1), dtype=object)
     file=open("data/tx_ini.txt", 'r')
@@ -91,6 +78,7 @@ if __name__ == '__main__':
       i+=1
     file.close()
 
+    #read in tx_bnd_down
     tx_bnd_down=np.empty((num_train_samples, 2), dtype=object)
     u_bnd_down=np.empty((num_train_samples, 1), dtype=object)
     file=open("data/tx_bnd_dn.txt", 'r')
@@ -102,7 +90,8 @@ if __name__ == '__main__':
       u_bnd_down[i, 0]=float(num[2].strip())
       i+=1
     file.close()
-  
+
+    #read in tx_bnd_up
     tx_bnd_up=np.empty((num_train_samples, 2), dtype=object)
     u_bnd_up=np.empty((num_train_samples, 1), dtype=object)
     file=open("data/tx_bnd_up.txt", 'r')
