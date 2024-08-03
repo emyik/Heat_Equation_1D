@@ -1,13 +1,26 @@
-# Heat Equation 1D
+# Using Physics-Informed Neural Networks to Model the 1-D Heat Equation
 
-Physics informed neural network (PINN) for the 1D Heat equation
+## Project Description
+Partial differential equations (PDEs) are used in a variety of field and applications; however, they lack closed-form solutions and require methods of approximation. Alongside mathematical approaches to approximation, computational tools like physics-informed neural networks (PINNs) have emerged. PINNs leverage a physics-based error term in addition to a typical mathematics-based error term to achieve a higher accuracy. This project aimed to model the 1D heat equation ($\frac{\partial u}{\partial t}=k\frac{\partial ^2 u}{\partial x^2}$) by training a PINN on the heat transfer across a steel rod. 
 
-This module implements the Physics Informed Neural Network (PINN) model for the 1D Heat equation. The Heat equation is given by (d/dt - c^2 d^2/dx^2)u = 0, where c is 2. It has an initial condition u(t=0, x) = x**2(2-x). Dirichlet boundary condition is given at x = 0,+2. The PINN model predicts u(t, x) for the input (t, x).
+## Table of Contents
 
-The effectiveness of PINNs is validated in the following works.
+`data-processing`: Converting rgb values to temperatures. Data is scaled where time $t \in [0,29]$ and position $x \in [0,24]$.
 
-+  M. Raissi, et al., Physics Informed Deep Learning (Part I): Data-driven Solutions of Nonlinear Partial Differential Equations, arXiv: 1711.10561 (2017). (https://arxiv.org/abs/1711.10561)
+`data`: Data used as inputs for training the PINN. Data is formatted as $(t, x, u(t,x))$, where $u(t,x)$ represents the temperature at time $t$ and position $x$. 
+* `tx_bnd_dn` and `tx_bnd_up` contain the boundary conditions on each end of the rod ($u=0$ and $u=24$).
+* `tx_ini` contains the boundary conditions for when $t=0$.
+* `tx_eqn` contains equally spaced data across $t$ and $x$.
 
-+  M. Raissi, et al., Physics Informed Deep Learning (Part II): Data-driven Discovery of Nonlinear Partial Differential Equations, arXiv: 1711.10566 (2017). (https://arxiv.org/abs/1711.10566)
+`pinn`: Construction of neural network.
+* Keras network model with 6 hidden layers, each with 32 neurons.
+* Hyperbolic tangent activation function.
+* L-BFGS-B optimization algorithm - maintains an approximation of the inverse Hessian matrix using a limited amount of computer memory.
+* The physics error term the model seeks to minimize is $\frac{\partial u}{\partial t}-k\frac{\partial ^2 u}{\partial x^2}$, where $k$ is the specific heat of the steel rod.
 
-It is based on hysics informed neural network (PINN) for the 1D Wave equation on https://github.com/okada39/pinn_wave
+`outputs`: Graphs depicting PINN performance. The model was trained on Google Colab T4 GPU for 60 seconds.
+* `predictions`: Neural network predictions for three temperal snapshots.
+* `tx-distribution.png`: Distribution of neural network prediction across $t$ and $x$.
+* `tx_error.png`: Error of neural network predictions, calculated as $E=p-e$, where $p$ represents the predicted temperature and $e$ represents the expected temperature.
+
+_Created by Mihika Dusad, Michelle Kang, Emi Zhang, and Laura Zhang as members of the [Thomas Jefferson High School for Science and Technology Quantum Information and Optics Lab](https://qlab.sites.tjhsst.edu/)._
