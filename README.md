@@ -6,6 +6,11 @@ Partial differential equations (PDEs) are used in a variety of field and applica
 <img src="experimental-setup.jpg" width="300">
 Experimental setup of collecting data of heat transfer across the steel rod.
 
+## Tools Used
+* Data Collection: Steel 1018 rod, FLIR ONE Edge Pro camera, Blowtorch
+* Data Processing: OpenCV, Numpy
+* Neural Network: Tensorflow, Matplotlib, Google Colab
+
 ## Table of Contents
 
 `data-processing`: Converting rgb values to temperatures. Data is scaled where time $t \in [0,29]$ and position $x \in [0,24]$.
