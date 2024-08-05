@@ -3,6 +3,9 @@
 ## Project Description
 Partial differential equations (PDEs) are used in a variety of field and applications; however, they lack closed-form solutions and require methods of approximation. Alongside mathematical approaches to approximation, computational tools like physics-informed neural networks (PINNs) have emerged. PINNs leverage a physics-based error term in addition to a typical mathematics-based error term to achieve a higher accuracy. This project aimed to model the 1D heat equation ($\frac{\partial u}{\partial t}=k\frac{\partial ^2 u}{\partial x^2}$) by training a PINN on the heat transfer across a steel rod. 
 
+<img src="experimental-setup.jpg" width="300">
+Experimental setup of collecting data of heat transfer across the steel rod.
+
 ## Table of Contents
 
 `data-processing`: Converting rgb values to temperatures. Data is scaled where time $t \in [0,29]$ and position $x \in [0,24]$.
